@@ -14,9 +14,10 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="52dp"
         android:text="タイトル"
         app:layout_constraintEnd_toStartOf="@+id/titleEdit"
+        app:layout_constraintHorizontal_bias="0.58"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hurigana" />
 
@@ -28,22 +29,24 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="50dp"
-        android:text="フリガナ"
+        android:layout_marginTop="45dp"
+        android:text="ふりがな"
         app:layout_constraintEnd_toStartOf="@+id/readingEdit"
+        app:layout_constraintHorizontal_bias="0.58"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textEdit" />
 
     <EditText
         android:id="@+id/titleEdit"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
-        android:layout_marginTop="28dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/object_style"
         android:ems="10"
+        android:hint="タイトル"
         android:inputType="textPersonName"
-        android:text="タイトル"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/readingEdit" />
 
@@ -51,29 +54,15 @@
         android:id="@+id/readingEdit"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/object_style"
         android:ems="10"
+        android:hint="ふりがな"
         android:inputType="textPersonName"
-        android:text="フリガナ"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textEdit" />
-
-    <EditText
-        android:id="@+id/textEdit"
-        android:layout_width="327dp"
-        android:layout_height="162dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="24dp" />
 
     <Button
         android:id="@+id/submitButton"
@@ -90,5 +79,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleEdit" />
+
+    <EditText
+        android:id="@+id/textEdit"
+        android:layout_width="302dp"
+        android:layout_height="150dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/object_style"
+        android:ems="10"
+        android:hint="本文"
+        android:inputType="textMultiLine"
+        android:maxLines="6"
+        android:minLines="6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 
 </android.support.constraint.ConstraintLayout>

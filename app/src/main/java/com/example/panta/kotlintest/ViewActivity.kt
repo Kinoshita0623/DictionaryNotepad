@@ -24,7 +24,7 @@ class ViewActivity : AppCompatActivity() {
         titleView.setText(title)
         textView.setText(text)
 
-        val backButton: Button = findViewById(R.id.backButton)
+        //val backButton: Button = findViewById(R.id.backButton)
         /*backButton.setOnClickListener(object: View.OnClickListener{
             val intent:Intent = Intent(this.getApplicationContext)
         })*/

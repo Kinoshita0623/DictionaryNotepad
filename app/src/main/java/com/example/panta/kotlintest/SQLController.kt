@@ -15,12 +15,11 @@ class SQLController(context: Context){
     private val sql:SQLHelper
     init{
         sql = SQLHelper(context)
-
     }
 
 
     fun getDataAll():ArrayList<DataBeans>{   //戻り値として配列を指定する
-        var db = sql.getReadableDatabase()
+        val db = sql.writableDatabase
         val cursor:Cursor = db.query(tableName, arrayOf("_id", "TITLE", "READ", "MAINTEXT","READINT"), null, null, null, null, "_id DESC")
 
         //ここに配列を用意
@@ -45,7 +44,7 @@ class SQLController(context: Context){
         return list//配列を返す
     }
     fun setData(title:String, reading:String, mainText:String):Boolean{
-        val db = sql.getWritableDatabase()
+        val db = sql.writableDatabase
         val values = ContentValues()
         values.put("TITLE",title)
         values.put("READ", reading)
@@ -63,7 +62,7 @@ class SQLController(context: Context){
 
     fun delData(position:Int){
         try{
-            val db:SQLiteDatabase = sql.getWritableDatabase()
+            val db:SQLiteDatabase = sql.writableDatabase
             db.delete(tableName,"_id = " +position.toString(),null)
         }catch(e : Exception){
             e.printStackTrace()
@@ -72,5 +71,3 @@ class SQLController(context: Context){
     }
 
 }
-
-//data class DataBeans(val id:Int, val title:String, val reading:String, val mainText:String, val readView:Int)
