@@ -35,7 +35,8 @@ class MainActivity : AppCompatActivity() {
             val newDataBeans = ArrayList<DataBeans>()
 
             //キーワードから選出
-            dataList.filter{data -> data.title.contains(text) || data.mainText.contains(text)}
+            this.dataList
+                    .filter{data -> data.title.contains(text) || data.mainText.contains(text)}
                     .forEach{data -> newDataBeans.add(data)}
 
             reloadList(newDataBeans).reloadAdapter()
@@ -52,12 +53,18 @@ class MainActivity : AppCompatActivity() {
         //ListViewの要素がクリックされたときのリスナー
         val listView:ListView = findViewById(R.id.listView)
         listView.setOnItemClickListener{parent, view, position ,id ->
-            val intent= Intent(applicationContext,ViewActivity::class.java)
 
-            var title:String = titleList[position]
-            var text:String = textList[position]
-            intent.putExtra("Title",title)
-            intent.putExtra("Text",text)
+            var data:DataBeans = dataList[position]
+            /*var title:String = titleList[position]
+            var text:String = textList[position]*/
+
+            val intent= Intent(applicationContext,ViewActivity::class.java).apply{
+                /*putExtra("Title",title)
+                putExtra("Text",text)
+                putExtra("Read",dataList[position].reading)
+                putExtra("id",position)*/
+                putExtra("Data",data)
+            }
             startActivity(intent)
 
         }
@@ -77,7 +84,8 @@ class MainActivity : AppCompatActivity() {
         //id順に並び替え
         val idSort:Button = findViewById(R.id.sortId)
         idSort.setOnClickListener{
-            reloadList().reloadAdapter()
+            this.reloadList()
+                    .reloadAdapter()
         }
     }
     private fun reloadList(list:ArrayList<DataBeans>):MainActivity{
@@ -106,18 +114,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun deleteCheck(position:Int){
-        var alert: AlertDialog.Builder = AlertDialog.Builder(this)
-        alert.setTitle("削除")
-        alert.setMessage("本当に削除しますか")
-
-        alert.setPositiveButton("YES"){dialog,which->
-            deleteItem(position)    //問題点
+        var alert: AlertDialog.Builder = AlertDialog.Builder(this).apply{
+            setTitle("削除")
+            setMessage("本当に削除しますか")
+            setPositiveButton("YES"){ dialog,which ->
+                deleteItem(position)
+            }
+            setNeutralButton("No"){ dialog, which -> }
+            show()
         }
 
-        alert.setNeutralButton("No"){dialog,which->
-
-        }
-        alert.show()
     }
     private fun deleteItem(position:Int){
         this.sql.delData(idList[position])

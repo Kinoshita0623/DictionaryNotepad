@@ -1,6 +1,8 @@
 package com.example.panta.kotlintest;
 
-public class DataBeans implements Comparable<DataBeans> {
+import java.io.Serializable;
+
+public class DataBeans implements Comparable<DataBeans> ,Serializable{
     private int id;
     private String title;
     private String reading;

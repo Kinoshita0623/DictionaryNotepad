@@ -59,10 +59,20 @@ class SQLController(context: Context){
     fun delData(position:Int){
         try{
             val db:SQLiteDatabase = sql.writableDatabase
-            db.delete(tableName,"_id = " +position.toString(),null)
+            db.delete(tableName,"_id = " + position.toString(),null)
         }catch(e : Exception){
             e.printStackTrace()
         }
+
+    }
+
+    fun updateData(data:DataBeans){
+        val cv = ContentValues()
+        cv.put("TITLE",data.title)
+        cv.put("READ",data.reading)
+        cv.put("MAINTEXT",data.mainText)
+        val db:SQLiteDatabase = sql.writableDatabase
+        db.update(tableName,cv,"_id = " + data.id,null)
 
     }
 

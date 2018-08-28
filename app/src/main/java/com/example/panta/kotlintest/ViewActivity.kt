@@ -1,5 +1,6 @@
 package com.example.panta.kotlintest
 
+import android.app.PendingIntent.getActivity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.support.v7.app.AppCompatActivity
@@ -17,13 +18,23 @@ class ViewActivity : AppCompatActivity() {
 
         //val intent: Intent = getIntent()
         val intent: Intent = intent
-        val title:String = intent.getStringExtra("Title")
-        val text:String = intent.getStringExtra("Text")
+        val data= intent.getSerializableExtra("Data")
+        if(data is DataBeans){
+            val titleView: TextView = findViewById(R.id.titleView)
+            val textView: TextView = findViewById(R.id.textView)
+            titleView.text = data.title
+            textView.text = data.mainText
 
-        val titleView: TextView = findViewById(R.id.titleView)
-        val textView: TextView = findViewById(R.id.textView)
-        titleView.text = title
-        textView.text = text
+        }
+
+        val editButton:Button = findViewById(R.id.edit)
+        editButton.setOnClickListener{
+            val intent = Intent(applicationContext,NewNoteActivity::class.java)
+                    intent.putExtra("Data",data)
+
+            startActivity(intent)
+
+        }
 
     }
 }

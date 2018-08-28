@@ -55,31 +55,41 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="311dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sortId">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    </ListView>
+    </ScrollView>
+
+ <ListView
+     android:id="@+id/listView"
+     android:layout_width="match_parent"
+     android:layout_height="388dp"
+     android:layout_marginTop="8dp"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintHorizontal_bias="1.0"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toBottomOf="@+id/sortId">
+
+ </ListView>
 
     <Button
         android:id="@+id/newNoteButton"
-        android:layout_width="108dp"
+        android:layout_width="59dp"
         android:layout_height="43dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginStart="8dp"
         android:background="@drawable/button_style"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:text="@string/newNote"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listView">
+        app:layout_constraintHorizontal_bias="0.865"
+        app:layout_constraintStart_toStartOf="parent">
 
         <requestFocus />
     </Button>
