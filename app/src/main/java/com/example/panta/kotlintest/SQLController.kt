@@ -10,12 +10,8 @@ import android.provider.ContactsContract
 import java.lang.Exception
 
 class SQLController(context: Context){
-    val context = context
-    val tableName = "DICTIONARY"
-    private val sql:SQLHelper
-    init{
-        sql = SQLHelper(context)
-    }
+    private val tableName = "DICTIONARY"
+    private val sql:SQLHelper = SQLHelper(context)
 
 
     fun getDataAll():ArrayList<DataBeans>{   //戻り値として配列を指定する

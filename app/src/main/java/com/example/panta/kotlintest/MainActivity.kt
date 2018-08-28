@@ -1,13 +1,10 @@
 package com.example.panta.kotlintest
 
-
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-
 import android.support.v7.app.AlertDialog
-
 import android.widget.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.ArrayList
@@ -26,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT //縦に固定
 
-
         //リストとアダプターの処理
         this.reloadList().reloadAdapter()
 
@@ -34,10 +30,15 @@ class MainActivity : AppCompatActivity() {
         val searchButton: Button = findViewById(R.id.searchButton) //as Button
         searchButton.setOnClickListener{
             val searchText:EditText = findViewById(R.id.searchBox)
-            var searchClass = SearchClass()
-            var list:ArrayList<DataBeans> = searchClass.search(dataList,searchText.getText().toString())
-            System.out.println(searchText.toString())
-            reloadList(list).reloadAdapter()
+            val text = searchText.text.toString()
+
+            val newDataBeans = ArrayList<DataBeans>()
+
+            dataList.filter{data -> data.title.contains(text) || data.mainText.contains(text)}
+                    .forEach{data -> newDataBeans.add(data)}
+
+            reloadList(newDataBeans).reloadAdapter()
+
         }
 
         //新規作成ボタン
@@ -118,11 +119,6 @@ class MainActivity : AppCompatActivity() {
         alert.show()
     }
     private fun deleteItem(position:Int){
-        //タイトル、本文、リストから削除する
-        //titleList.remove(titleList[position])
-        //textList.remove(textList[position])
-
-        //var sql = SQLController(this)
         this.sql.delData(idList[position])
 
         //リストをリロード更新する
