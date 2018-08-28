@@ -19,12 +19,12 @@ class MainActivity : AppCompatActivity() {
     var dataList:ArrayList<DataBeans> = ArrayList()
 
     var arrayAdapter:ArrayAdapter<String>? = null
+    private val sql:SQLController = SQLController(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT //縦に固定
 
 
         //リストとアダプターの処理
@@ -91,9 +91,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun reloadList():MainActivity{
-        val sc = SQLController(this)
+        //val sql = SQLController(this)
 
-        this.dataList = sc.getDataAll()
+        this.dataList = this.sql.getDataAll()
         this.reloadList(dataList)
         return this //メソッドチェーンをするために自分自身を返している
     }
@@ -119,16 +119,11 @@ class MainActivity : AppCompatActivity() {
     }
     private fun deleteItem(position:Int){
         //タイトル、本文、リストから削除する
-        titleList.remove(titleList[position])
-        textList.remove(textList[position])
+        //titleList.remove(titleList[position])
+        //textList.remove(textList[position])
 
-        //リストアダプターを更新する
-        this.reloadAdapter()
-
-        //var w = idList.get(position)
-        var w = idList[position]
-        var sql = SQLController(this)
-        sql.delData(w)
+        //var sql = SQLController(this)
+        this.sql.delData(idList[position])
 
         //リストをリロード更新する
         this.reloadList().reloadAdapter()
