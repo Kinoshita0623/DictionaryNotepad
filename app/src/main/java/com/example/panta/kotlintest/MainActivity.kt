@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
             val newDataBeans = ArrayList<DataBeans>()
 
+            //キーワードから選出
             dataList.filter{data -> data.title.contains(text) || data.mainText.contains(text)}
                     .forEach{data -> newDataBeans.add(data)}
 

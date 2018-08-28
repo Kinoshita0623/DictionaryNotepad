@@ -13,20 +13,17 @@ class ViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view)
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        val intent: Intent = getIntent()
+        //val intent: Intent = getIntent()
+        val intent: Intent = intent
         val title:String = intent.getStringExtra("Title")
         val text:String = intent.getStringExtra("Text")
 
         val titleView: TextView = findViewById(R.id.titleView)
         val textView: TextView = findViewById(R.id.textView)
-        titleView.setText(title)
-        textView.setText(text)
+        titleView.text = title
+        textView.text = text
 
-        //val backButton: Button = findViewById(R.id.backButton)
-        /*backButton.setOnClickListener(object: View.OnClickListener{
-            val intent:Intent = Intent(this.getApplicationContext)
-        })*/
     }
 }
