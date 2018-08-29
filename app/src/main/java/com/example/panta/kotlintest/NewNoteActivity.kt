@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -20,10 +21,9 @@ class NewNoteActivity : AppCompatActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
 
-
         //<intent>
         val intent = intent
-        var data = intent.getSerializableExtra("Data")
+        val data = intent.getSerializableExtra("Data") as? DataBeans
         //</intent>
 
 
@@ -33,41 +33,74 @@ class NewNoteActivity : AppCompatActivity() {
         val mainText:EditText = findViewById(R.id.textEdit)
 
 
-        if(data is DataBeans){
+        //<変数更新>
+        if(data !=  null && data.id != -100){
             titleField.setText(data.title)
             readingField.setText(data.reading)
             mainText.setText(data.mainText)
             this.whatEdit = data.id
-
         }
+        //</変数更新>
 
+        //リスナー
         submitButton.setOnClickListener{
             val title = titleField.text.toString()
             val reading = readingField.text.toString()
             val text = mainText.text.toString()
 
-            if(title.length > 1 && reading.length > 1 && text.length > 1){
-                val sql = SQLController(application)
-
-                if(whatEdit != -100){
-                    if(data is DataBeans){
-                        data.title = title
-                        data.reading = reading
-                        data.mainText = text
-                        sql.updateData(data)
-                    }
-
-
-                }else{
-
-                    sql.setData(title,reading,text)
-                }
-
+            fun backOperation(){
                 val intent = Intent(application,MainActivity::class.java)
                 startActivity(intent)
                 finish()
             }
+
+
+            if(title.length > 1 && reading.length > 1 && text.length > 1 && data != null){
+                val sql = SQLController(application)
+
+                if(whatEdit != -100){
+                    //新規作成ではない場合の処理
+                    data.title = title
+                    data.reading = reading
+                    data.mainText = text
+                    sql.updateData(data)
+                    backOperation()
+
+                }else{
+
+                    val count:Int = data.dataList
+                            .filter{ data -> data.title.contains(title) || data.mainText.contains(text)}
+                            .count()
+
+                    if(count != 0){
+                        //アラートを表示
+                        AlertDialog.Builder(this).apply{
+                            setTitle("重複が発見されました")
+                            setMessage("続行しますか?")
+                            setPositiveButton("YES"){dialog, which ->
+                                sql.setData(title,reading,text)
+                                backOperation()
+                            }
+                            setNegativeButton("NO"){dialog, which -> }
+
+                        }.show()
+                    }else{
+                        //正常な処理
+                        sql.setData(title,reading,text)
+                        backOperation()
+                    }
+                }
+            }else{
+                //エラー
+                AlertDialog.Builder(this).apply{
+                    setTitle("エラー")
+                    setMessage("入力不備を確認の上デベロッパーに問い合わせてください")
+                    setPositiveButton("OK"){dialog, which ->  }
+
+                }.show()
+            }
         }
+
 
     }
 }

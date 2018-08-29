@@ -46,7 +46,12 @@ class MainActivity : AppCompatActivity() {
         //新規作成ボタン
         val newNoteButton:Button = findViewById(R.id.newNoteButton)// as Button
         newNoteButton.setOnClickListener{
+            var data = DataBeans()
+            data.dataList = dataList
+            data.id = -100
+
             var intent = Intent(applicationContext,NewNoteActivity::class.java)
+            intent.putExtra("Data",data)
             startActivity(intent)
         }
 
@@ -54,9 +59,8 @@ class MainActivity : AppCompatActivity() {
         val listView:ListView = findViewById(R.id.listView)
         listView.setOnItemClickListener{parent, view, position ,id ->
 
-            var data:DataBeans = dataList[position].apply {
-                dataList = this.dataList
-            }
+            var data:DataBeans = dataList[position]
+            data.dataList= this.dataList
 
             val intent= Intent(applicationContext,ViewActivity::class.java).apply{
                 putExtra("Data",data)
