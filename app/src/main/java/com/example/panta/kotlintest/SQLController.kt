@@ -41,10 +41,13 @@ class SQLController(context: Context){
     }
     fun setData(title:String, reading:String, mainText:String):Boolean{
         val db = sql.writableDatabase
-        val values = ContentValues()
-        values.put("TITLE",title)
-        values.put("READ", reading)
-        values.put("MAINTEXT",mainText)
+        val values = ContentValues().apply{
+            put("TITLE",title)
+            put("READ", reading)
+            put("MAINTEXT",mainText)
+            put("MAINTEXT",mainText)
+        }
+
         try{
             db.insert(tableName,null,values)
         }catch(e:Exception){
@@ -67,10 +70,11 @@ class SQLController(context: Context){
     }
 
     fun updateData(data:DataBeans){
-        val cv = ContentValues()
-        cv.put("TITLE",data.title)
-        cv.put("READ",data.reading)
-        cv.put("MAINTEXT",data.mainText)
+        val cv = ContentValues().apply{
+            put("TITLE",data.title)
+            put("READ",data.reading)
+            put("MAINTEXT",data.mainText)
+        }
         val db:SQLiteDatabase = sql.writableDatabase
         db.update(tableName,cv,"_id = " + data.id,null)
 

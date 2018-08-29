@@ -54,11 +54,11 @@
 
     <Button
         android:id="@+id/edit"
-        android:layout_width="51dp"
-        android:layout_height="47dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_width="68dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:text="編集"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"

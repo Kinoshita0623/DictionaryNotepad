@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
     var titleList:ArrayList<String> = ArrayList()
     var textList:ArrayList<String> = ArrayList()
     var idList:ArrayList<Int> = ArrayList()
-    var dataList:ArrayList<DataBeans> = ArrayList()
+    private var dataList:ArrayList<DataBeans> = ArrayList()
 
     var arrayAdapter:ArrayAdapter<String>? = null
     private val sql:SQLController = SQLController(this)
@@ -54,15 +54,11 @@ class MainActivity : AppCompatActivity() {
         val listView:ListView = findViewById(R.id.listView)
         listView.setOnItemClickListener{parent, view, position ,id ->
 
-            var data:DataBeans = dataList[position]
-            /*var title:String = titleList[position]
-            var text:String = textList[position]*/
+            var data:DataBeans = dataList[position].apply {
+                dataList = this.dataList
+            }
 
             val intent= Intent(applicationContext,ViewActivity::class.java).apply{
-                /*putExtra("Title",title)
-                putExtra("Text",text)
-                putExtra("Read",dataList[position].reading)
-                putExtra("id",position)*/
                 putExtra("Data",data)
             }
             startActivity(intent)
@@ -114,7 +110,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun deleteCheck(position:Int){
-        var alert: AlertDialog.Builder = AlertDialog.Builder(this).apply{
+        AlertDialog.Builder(this).apply{
             setTitle("削除")
             setMessage("本当に削除しますか")
             setPositiveButton("YES"){ dialog,which ->

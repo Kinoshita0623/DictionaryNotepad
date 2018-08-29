@@ -41,9 +41,6 @@ class NewNoteActivity : AppCompatActivity() {
 
         }
 
-
-
-
         submitButton.setOnClickListener{
             val title = titleField.text.toString()
             val reading = readingField.text.toString()

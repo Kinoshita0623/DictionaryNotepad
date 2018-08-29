@@ -29,8 +29,9 @@ class ViewActivity : AppCompatActivity() {
 
         val editButton:Button = findViewById(R.id.edit)
         editButton.setOnClickListener{
-            val intent = Intent(applicationContext,NewNoteActivity::class.java)
-                    intent.putExtra("Data",data)
+            val intent = Intent(applicationContext,NewNoteActivity::class.java).apply{
+                putExtra("Data",data)
+            }
 
             startActivity(intent)
 
