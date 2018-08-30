@@ -67,16 +67,18 @@ class NewNoteActivity : AppCompatActivity() {
                     setReading(reading)
                 }
 
-                val count:Int = data.dataList
-                        .filter{ data -> data.title == title || data.mainText == text}
-                        .count()
-                
+                fun countMethod():Int{
+                    return data.dataList
+                            .filter{ data -> data.title == title || data.mainText == text}
+                            .count()
+                }
+
                 when{
                     whatEdit != -100 -> {
                         sql.updateData(data)
                         backOperation()
                     }
-                    count == 0 -> {
+                    countMethod() == 0 -> {
                         sql.setData(title,reading,text)
                         backOperation()
                     }
