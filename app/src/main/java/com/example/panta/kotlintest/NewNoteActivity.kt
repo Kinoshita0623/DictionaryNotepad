@@ -48,6 +48,8 @@ class NewNoteActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+
         //</メイン画面移動>
 
         //リスナー
@@ -68,23 +70,31 @@ class NewNoteActivity : AppCompatActivity() {
                 val count:Int = data.dataList
                         .filter{ data -> data.title == title || data.mainText == text}
                         .count()
+                
+                when{
+                    whatEdit != -100 -> {
+                        sql.updateData(data)
+                        backOperation()
+                    }
+                    count == 0 -> {
+                        sql.setData(title,reading,text)
+                        backOperation()
+                    }
+                    else -> {
+                        AlertDialog.Builder(this).apply{
+                            setTitle("重複が発見されました")
+                            setMessage("続行しますか?")
+                            setPositiveButton("YES"){ dialog, which ->
+                                sql.setData(title,reading,text)
+                                backOperation()
+                            }
+                            setNegativeButton("NO"){ notA, notB -> }
 
-                if(count == 0){
-                    //正常な処理
-                    sql.setData(title,reading,text)
-                    backOperation()
-                }else{
-                    AlertDialog.Builder(this).apply{
-                        setTitle("重複が発見されました")
-                        setMessage("続行しますか?")
-                        setPositiveButton("YES"){ dialog, which ->
-                            sql.setData(title,reading,text)
-                            backOperation()
-                        }
-                        setNegativeButton("NO"){ notA, notB -> }
-
-                    }.show()
+                        }.show()
+                    }
                 }
+
+
 
             }else{
                 //エラー
