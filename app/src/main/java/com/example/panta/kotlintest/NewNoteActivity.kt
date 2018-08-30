@@ -42,54 +42,50 @@ class NewNoteActivity : AppCompatActivity() {
         }
         //</変数更新>
 
+        //<メイン画面移動>
+        fun backOperation(){
+            val intent = Intent(application,MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        //</メイン画面移動>
+
         //リスナー
         submitButton.setOnClickListener{
             val title = titleField.text.toString()
             val reading = readingField.text.toString()
             val text = mainText.text.toString()
 
-            fun backOperation(){
-                val intent = Intent(application,MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-
-
             if(title.length > 1 && reading.length > 1 && text.length > 1 && data != null){
                 val sql = SQLController(application)
 
-                if(whatEdit != -100){
-                    //新規作成ではない場合の処理
-                    data.title = title
-                    data.reading = reading
-                    data.mainText = text
-                    sql.updateData(data)
-                    backOperation()
-
-                }else{
-
-                    val count:Int = data.dataList
-                            .filter{ data -> data.title.contains(title) || data.mainText.contains(text)}
-                            .count()
-
-                    if(count != 0){
-                        //アラートを表示
-                        AlertDialog.Builder(this).apply{
-                            setTitle("重複が発見されました")
-                            setMessage("続行しますか?")
-                            setPositiveButton("YES"){dialog, which ->
-                                sql.setData(title,reading,text)
-                                backOperation()
-                            }
-                            setNegativeButton("NO"){dialog, which -> }
-
-                        }.show()
-                    }else{
-                        //正常な処理
-                        sql.setData(title,reading,text)
-                        backOperation()
-                    }
+                data.apply{
+                    setTitle(title)
+                    setMainText(text)
+                    setReading(reading)
                 }
+
+                val count:Int = data.dataList
+                        .filter{ data -> data.title == title || data.mainText == text}
+                        .count()
+
+                if(count == 0){
+                    //正常な処理
+                    sql.setData(title,reading,text)
+                    backOperation()
+                }else{
+                    AlertDialog.Builder(this).apply{
+                        setTitle("重複が発見されました")
+                        setMessage("続行しますか?")
+                        setPositiveButton("YES"){ dialog, which ->
+                            sql.setData(title,reading,text)
+                            backOperation()
+                        }
+                        setNegativeButton("NO"){ notA, notB -> }
+
+                    }.show()
+                }
+
             }else{
                 //エラー
                 AlertDialog.Builder(this).apply{
@@ -100,7 +96,5 @@ class NewNoteActivity : AppCompatActivity() {
                 }.show()
             }
         }
-
-
     }
 }
