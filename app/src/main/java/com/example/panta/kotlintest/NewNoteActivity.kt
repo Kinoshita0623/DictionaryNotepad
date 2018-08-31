@@ -23,7 +23,7 @@ class NewNoteActivity : AppCompatActivity() {
 
         //<intent>
         val intent = intent
-        val data = intent.getSerializableExtra("Data") as? DataBeans
+        val data = intent.getSerializableExtra("Data") as? Data
         //</intent>
 
 
@@ -34,11 +34,11 @@ class NewNoteActivity : AppCompatActivity() {
 
 
         //<変数更新>
-        if(data !=  null && data.id != -100){
-            titleField.setText(data.title)
-            readingField.setText(data.reading)
-            mainText.setText(data.mainText)
-            this.whatEdit = data.id
+        if(data !=  null && data.dataBeans.id != -100){
+            titleField.setText(data.dataBeans.title)
+            readingField.setText(data.dataBeans.reading)
+            mainText.setText(data.dataBeans.mainText)
+            this.whatEdit = data.dataBeans.id
         }
         //</変数更新>
 
@@ -61,13 +61,14 @@ class NewNoteActivity : AppCompatActivity() {
             if(title.length > 1 && reading.length > 1 && text.length > 1 && data != null){
                 val sql = SQLController(application)
 
-                data.apply{
+                data.dataBeans.apply{
                     setTitle(title)
                     setMainText(text)
                     setReading(reading)
                 }
 
-                fun countMethod():Int{
+                //重複チェック
+                fun overlapCheck():Int{
                     return data.dataList
                             .filter{ data -> data.title == title || data.mainText == text}
                             .count()
@@ -75,10 +76,10 @@ class NewNoteActivity : AppCompatActivity() {
 
                 when{
                     whatEdit != -100 -> {
-                        sql.updateData(data)
+                        sql.updateData(data.dataBeans)
                         backOperation()
                     }
-                    countMethod() == 0 -> {
+                    overlapCheck() == 0 -> {
                         sql.setData(title,reading,text)
                         backOperation()
                     }

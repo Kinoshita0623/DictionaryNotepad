@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     var arrayAdapter:ArrayAdapter<String>? = null
     private val sql:SQLController = SQLController(this)
+    private var viewMode:Boolean = false    //暗記モードかそうではないか
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,9 +47,11 @@ class MainActivity : AppCompatActivity() {
         //新規作成ボタン
         val newNoteButton:Button = findViewById(R.id.newNoteButton)// as Button
         newNoteButton.setOnClickListener{
-            var data = DataBeans()
+            // var data = DataBeans()
+            var dataBeans = DataBeans()
+            var data = Data(dataBeans,viewMode,dataList)
             data.dataList = dataList
-            data.id = -100
+            data.dataBeans.id = -100
 
             var intent = Intent(applicationContext,NewNoteActivity::class.java)
             intent.putExtra("Data",data)
@@ -59,8 +62,10 @@ class MainActivity : AppCompatActivity() {
         val listView:ListView = findViewById(R.id.listView)
         listView.setOnItemClickListener{parent, view, position ,id ->
 
-            var data:DataBeans = dataList[position]
-            data.dataList= this.dataList
+
+            /*var data:DataBeans = dataList[position]
+            data.dataList= this.dataList*/
+            val data = Data(dataList[position],this.viewMode,dataList)
 
             val intent= Intent(applicationContext,ViewActivity::class.java).apply{
                 putExtra("Data",data)
@@ -87,6 +92,13 @@ class MainActivity : AppCompatActivity() {
             this.reloadList()
                     .reloadAdapter()
         }
+
+        //トグルボタン
+        val toggle:Switch = findViewById(R.id.toggleSwitch)
+        toggle.setOnCheckedChangeListener{ buttonView, isChecked ->
+            this.viewMode = isChecked
+        }
+        //endトグルボタン
     }
     private fun reloadList(list:ArrayList<DataBeans>):MainActivity{
         //各リストを初期化する

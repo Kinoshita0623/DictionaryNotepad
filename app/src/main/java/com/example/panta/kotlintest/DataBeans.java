@@ -12,17 +12,12 @@ public class DataBeans implements Comparable<DataBeans> ,Serializable{
     private String reading;
     private String mainText;
     private int readView;
-    private ArrayList<DataBeans> dataList;
+    //private ArrayList<DataBeans> dataList;
 
     public DataBeans(){}
 
     public DataBeans(int id, String title, String reading, String mainText,int readView){
         this.id = id; this.title = title; this.reading = reading; this.mainText = mainText; this.readView = readView;
-    }
-    public DataBeans(int id, String title, String reading, String mainText, int readView, ArrayList<DataBeans> dataList){
-        this(id,title,reading,mainText,readView);
-        this.dataList = dataList;
-
     }
 
     public int getId() {
@@ -51,12 +46,12 @@ public class DataBeans implements Comparable<DataBeans> ,Serializable{
         this.mainText = text;
     }
 
-    public DataBeans setDataList(ArrayList<DataBeans> dataList){
+    /*public DataBeans setDataList(ArrayList<DataBeans> dataList){
         this.dataList = dataList;
         return this;
-    }
+    }*/
 
-    public ArrayList<DataBeans> getDataList() { return this.dataList; }
+    //public ArrayList<DataBeans> getDataList() { return this.dataList; }
 
 
 
